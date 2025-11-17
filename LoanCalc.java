@@ -32,10 +32,11 @@ public class LoanCalc {
 	private static double endBalance(double loan, double rate, int n, double payment) {	
 		// Replace the following statement with your code
 		double totalleft = loan;
-		for (int i = 0; i < n && totalleft <= loan; i++){
-			totalleft = (totalleft - payment) * (1 + rate/100);
+		double newrate = rate / 100.0;
+		for (int i = 0; i < n; i++){
+			totalleft = (totalleft - payment) * (1 + newrate);
 		}
-		return (int) Math.round(totalleft);
+		return totalleft;
 	}
 	
 	
@@ -46,7 +47,7 @@ public class LoanCalc {
 	// Side effect: modifies the class variable iterationCounter.
     public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
 		// Replace the following statement with your code
-		double g = 0.0 ;
+		double g = 0.0;
 		iterationCounter = 0;
 		while (endBalance(loan, rate, n, g) > 0){
 				g += epsilon;
