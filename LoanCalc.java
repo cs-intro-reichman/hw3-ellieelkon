@@ -34,7 +34,8 @@ public class LoanCalc {
 		double totalleft = loan;
 		double newrate = rate / 100.0;
 		for (int i = 0; i < n; i++){
-			totalleft = (totalleft - payment) * (1 + newrate);
+			totalleft = totalleft - payment;
+			totalleft = totalleft * (1 + newrate);
 		}
 		return totalleft;
 	}
@@ -47,10 +48,12 @@ public class LoanCalc {
 	// Side effect: modifies the class variable iterationCounter.
     public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
 		// Replace the following statement with your code
-		double g = 0.0;
+		double g = (loan / (double) (n));
+		double totpayment = endBalance(loan, rate, n, g);
 		iterationCounter = 0;
 		while (endBalance(loan, rate, n, g) > 0){
 				g += epsilon;
+				totpayment = endBalance(loan, rate, n, g);
 				iterationCounter++;
 		}
 		return g;
@@ -63,7 +66,7 @@ public class LoanCalc {
 	// Side effect: modifies the class variable iterationCounter.
     public static double bisectionSolver(double loan, double rate, int n, double epsilon) {  
         // Replace the following statement with your code
-		double L = 1;
+		double L = loan / (n * 4);
 		double H = loan / 2.0;
 		iterationCounter = 1;
 		double g = (L + H) / 2.0;
